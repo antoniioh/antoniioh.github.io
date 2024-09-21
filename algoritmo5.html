@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Algoritmo 5</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #1c1c1c;
+            color: #e0e0e0;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            flex-direction: column;
+        }
+
+        .container {
+            max-width: 600px;
+            text-align: center;
+            background-color: #2a2a2a;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #f2f2f2;
+            border-bottom: 2px solid #333;
+            padding-bottom: 10px;
+        }
+
+        p {
+            margin: 15px 0;
+            line-height: 1.6;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+            width: calc(100% - 22px);
+            box-sizing: border-box;
+        }
+
+        input[type="button"] {
+            padding: 12px 30px;
+            background-color: #1e90ff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin: 10px 0;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        input[type="button"]:hover {
+            background-color: #6495ed;
+            transform: translateY(-2px);
+        }
+
+        .result {
+            margin-top: 20px;
+            background-color: #333;
+            padding: 15px;
+            border-radius: 5px;
+        }
+
+        .error {
+            display: none; 
+            color: #ff6347;
+            background-color: #2e2e2e;
+            border: 1px solid #ff6347;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+
+        .error.visible {
+            display: block; 
+        }
+
+        footer {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #888;
+        }
+    </style>
+    <script>
+        function Calcularpi() {
+            var a = parseInt(document.getElementById("num1").value);
+            var error = document.getElementById("error");
+            var output = document.getElementById("out");
+
+            output.innerHTML = "";
+            error.innerHTML = "";
+            error.classList.remove('visible');
+
+            if (!isNaN(a) && a > 0) {
+                var Sucesion = "";
+                var masmenos = false;
+                var pi = 0.0;
+
+                for (var i = 1; i < a * 2; i += 2) {
+                    if (masmenos) {
+                        Sucesion += `1/${i} + `;
+                        pi -= 1.0 / i;
+                        masmenos = false;
+                    } else {
+                        Sucesion += `1/${i} - `;
+                        pi += 1.0 / i;
+                        masmenos = true;
+                    }
+                }
+
+                pi *= 4;
+
+                Sucesion = Sucesion.slice(0, -2);
+                output.innerHTML = `Resultado:<br> Las iteraciones hasta ${a} son:<br> ${Sucesion}<br><br>`;
+                output.innerHTML += `Pi es igual a: ${pi}`;
+            } else {
+                error.innerHTML = "Ha ocurrido un error, no es un número o no es entero positivo.";
+                error.classList.add('visible');
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Algoritmo 5: Cálculo de π</h1>
+        <p> Introduzca el numero de interaciones.</p>
+        <input type="text" id="num1" placeholder="Número de iteraciones">
+        <input type="button" value="Calcular" onclick="Calcularpi()">
+        <div id="error" class="error"></div>
+        <div id="out" class="result">Resultado:</div>
+        <br>
+        <input type="button" value="< Volver" onclick="window.location.href='index.html';">
+    </div>
+</body>
+</html>
